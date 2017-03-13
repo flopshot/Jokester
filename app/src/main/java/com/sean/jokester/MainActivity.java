@@ -8,7 +8,6 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.sean.jokeactivity.DisplayJokeActivity;
-import com.sean.jokelib.Joke;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -46,12 +45,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void tellJoke(View view) {
         // 'Joke' library retrieves random Joke from default jokes and jokes retrieved from service
-        String joke = Joke.getJoke();
         Intent jokeActivityIntent = new Intent();
         jokeActivityIntent.setClass(getApplicationContext(), DisplayJokeActivity.class);
-        if ( joke != null && !joke.isEmpty()) {
-            jokeActivityIntent.putExtra(INTENT_STRING_KEY, joke);
-        }
         startActivity(jokeActivityIntent);
         // Toast.makeText(this, joke, Toast.LENGTH_LONG).show();
     }
