@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">DisplayJokeActivity</string>
+
+    <!--DEFAULT JOKE STRING-->
+    <string name="default_joke_compote">What did the PC say to the Jam Maker? \n DOES NOT COMPOTE!</string>
+    <string name="default_joke_789">Why is six afraid of seven? \n Because seven "eight" nine.</string>
+
+    <!--Fragment Strings-->
+    <string name="instructions">Press the button for a delicious joke!</string>
+    <string name="button_text">Tell Joke</string>
+    <string name="action_settings">Settings</string>
+
+    <!--Add Id-->
+    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+</resources>

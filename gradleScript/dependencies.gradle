@@ -1,0 +1,9 @@
+ext {
+    //Version
+    goolePlayServicesLibrary = '10.2.0'
+
+    //Support Libraries dependencies
+    goolePlayServicesDependencies = [
+        ads : "com.google.android.gms:play-services-ads:10.2.0",
+    ]
+}

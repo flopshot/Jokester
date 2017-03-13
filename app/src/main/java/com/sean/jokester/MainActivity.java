@@ -1,15 +1,19 @@
 package com.sean.jokester;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
+import com.sean.jokeactivity.DisplayJokeActivity;
 import com.sean.jokelib.Joke;
 
+
 public class MainActivity extends AppCompatActivity {
+
+    private static final String INTENT_STRING_KEY = "intentKey";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +45,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void tellJoke(View view) {
+        // 'Joke' library retrieves random Joke from default jokes and jokes retrieved from service
         String joke = Joke.getJoke();
-        Toast.makeText(this, joke, Toast.LENGTH_LONG).show();
+        Intent jokeActivityIntent = new Intent();
+        jokeActivityIntent.setClass(getApplicationContext(), DisplayJokeActivity.class);
+        if ( joke != null && !joke.isEmpty()) {
+            jokeActivityIntent.putExtra(INTENT_STRING_KEY, joke);
+        }
+        startActivity(jokeActivityIntent);
+        // Toast.makeText(this, joke, Toast.LENGTH_LONG).show();
     }
-
-
 }

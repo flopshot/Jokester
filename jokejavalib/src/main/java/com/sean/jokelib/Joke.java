@@ -3,17 +3,10 @@ package com.sean.jokelib;
 import java.util.Random;
 
 public class Joke {
-    private static final String[] DEFAULT_JOKES = {
-          "What did the PC say to the Jam Maker? \n DOES NOT COMPOTE!",
-          "Why is six afraid of seven? \n Because seven \"eight\" nine."
-    };
-
     public static String getJoke() {
         String[] otherJokes = retrieveOtherJokes();
-        String[] allJokes = concat(DEFAULT_JOKES, otherJokes);
-        return getRandom(allJokes);
+        return getRandom(otherJokes);
     }
-
 
     private static String[] retrieveOtherJokes() {
         String[] defaultEmpty = new String[]{};
@@ -21,6 +14,9 @@ public class Joke {
     }
 
     private static String getRandom(String[] array) {
+        if (array.length == 0) {
+            return null;
+        }
         int rnd = new Random().nextInt(array.length);
         return array[rnd];
     }

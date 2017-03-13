@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--DEFAULT JOKE ARRAY -->
+    <string-array name="default_jokes">
+        <item>@string/default_joke_compote</item>
+        <item>@string/default_joke_789</item>
+    </string-array>
+</resources>
