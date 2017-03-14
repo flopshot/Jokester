@@ -1,13 +1,12 @@
 package com.sean.jokester;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.sean.jokeactivity.DisplayJokeActivity;
+import com.sean.jokeactivity.EndpointAsyncTask;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -45,9 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void tellJoke(View view) {
         // 'Joke' library retrieves random Joke from default jokes and jokes retrieved from service
-        Intent jokeActivityIntent = new Intent();
-        jokeActivityIntent.setClass(getApplicationContext(), DisplayJokeActivity.class);
-        startActivity(jokeActivityIntent);
+        new EndpointAsyncTask().execute(getApplicationContext());
         // Toast.makeText(this, joke, Toast.LENGTH_LONG).show();
     }
 }
