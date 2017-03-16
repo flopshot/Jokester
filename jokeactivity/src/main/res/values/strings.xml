@@ -12,4 +12,7 @@
 
     <!--Add Id-->
     <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+
+    <!--Joke Activity Error String-->
+    <string name="joke_activity_error_msg">Sorry, But We Could Not Fetch New Jokes From The Network</string>
 </resources>

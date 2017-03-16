@@ -25,6 +25,14 @@ public class EndpointAsyncTask extends AsyncTask<Context, Void, List<String>> {
     private static MyApi myApiService = null;
     private Context mContext;
 
+    private GetTaskListener mListener = null;
+    private Exception mError = null;
+
+    EndpointAsyncTask setListener(GetTaskListener listener) {
+        this.mListener = listener;
+        return this;
+    }
+
     @Override
     protected List<String> doInBackground(Context... params) {
         if(myApiService == null) {  // Only do this once
@@ -50,6 +58,7 @@ public class EndpointAsyncTask extends AsyncTask<Context, Void, List<String>> {
         try {
             return myApiService.getJokes().execute().getJokeData();
         } catch (IOException e) {
+            mError = e;
             e.printStackTrace();
             return null;
         }
@@ -57,14 +66,28 @@ public class EndpointAsyncTask extends AsyncTask<Context, Void, List<String>> {
 
     @Override
     protected void onPostExecute(List<String> results) {
-        String joke = selectJoke(results);
+        String joke;
+        if (results != null) {
+            joke = selectJoke(results);
+        } else {
+            joke = null;
+            String errorMsg = mContext.getResources().getString(R.string.joke_activity_error_msg);
+            Toast.makeText(mContext, errorMsg, Toast.LENGTH_LONG).show();
+        }
 
-        Intent intentDisplayJoke = new Intent(mContext, DisplayJokeActivity.class);
-        intentDisplayJoke.putExtra(DISPLAY_JOKE_ACTIVITY_STRING_KEY, joke);
-        intentDisplayJoke.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        mContext.startActivity(intentDisplayJoke);
+        if (this.mListener != null) {
+            this.mListener.onComplete(joke, mError);
+        } else {
 
-        Toast.makeText(mContext, joke, Toast.LENGTH_LONG).show();
+            Intent intentDisplayJoke = new Intent(mContext, DisplayJokeActivity.class);
+            intentDisplayJoke.putExtra(DISPLAY_JOKE_ACTIVITY_STRING_KEY, joke);
+            intentDisplayJoke.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            mContext.startActivity(intentDisplayJoke);
+        }
+    }
+
+    interface GetTaskListener {
+        void onComplete(String jsonString, Exception e);
     }
 
     private String selectJoke(List<String> jokes) {

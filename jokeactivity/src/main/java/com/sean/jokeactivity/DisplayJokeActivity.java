@@ -31,8 +31,9 @@ public class DisplayJokeActivity extends AppCompatActivity {
         mAdView.loadAd(adRequest);
 
         Intent asyncIntent = getIntent();
-        if( asyncIntent.getExtras() != null) {
-            jokeView.setText(asyncIntent.getStringExtra(DISPLAY_JOKE_ACTIVITY_STRING_KEY));
+        String jokeStringExtra =  asyncIntent.getStringExtra(DISPLAY_JOKE_ACTIVITY_STRING_KEY);
+        if( jokeStringExtra != null) {
+            jokeView.setText(jokeStringExtra);
         } else {
             jokeView.setText(getDefaultJoke());
         }
