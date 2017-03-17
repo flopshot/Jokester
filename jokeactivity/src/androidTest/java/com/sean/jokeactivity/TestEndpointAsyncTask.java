@@ -40,7 +40,7 @@ public class TestEndpointAsyncTask {
 
     @Test
     public void testEndpointTask() throws Throwable {
-        EndpointAsyncTask task = new EndpointAsyncTask();
+        EndpointAsyncTask task = new EndpointAsyncTask(false);
         task.setListener(new EndpointAsyncTask.GetTaskListener() {
             @Override
             public void onComplete(String joke, Exception e) {

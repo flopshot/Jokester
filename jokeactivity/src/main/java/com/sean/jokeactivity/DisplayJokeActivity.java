@@ -3,7 +3,6 @@ package com.sean.jokeactivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.TextView;
 
 import com.google.android.gms.ads.AdRequest;
@@ -32,7 +31,6 @@ public class DisplayJokeActivity extends AppCompatActivity {
         }
 
         boolean isPaid = asyncIntent.getBooleanExtra(DISPLAY_JOKE_ACTIVITY_BOOL_KEY, true);
-        Log.w("isPaid", String.valueOf(isPaid));
         if (!isPaid) {
 
             AdView mAdView = (AdView) findViewById(R.id.adView);

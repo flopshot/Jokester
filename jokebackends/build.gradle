@@ -41,7 +41,7 @@ appengine {
 }
 
 
-task startEnpointServer(dependsOn: "appengineRun"){
+task startEnpointServer(dependsOn: "appengineRun") {
     group "google app engine"
 
     appengine {

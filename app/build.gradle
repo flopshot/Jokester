@@ -38,6 +38,6 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile supportDependencies.appcompat
-    compile googlePlayServicesDependencies.ads
+    freeCompile googlePlayServicesDependencies.ads
     compile project(":jokeactivity")
 }
