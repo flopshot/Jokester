@@ -23,14 +23,16 @@ android {
         }
     }
 
-//    productFlavors {
-//        paid {
-//            applicationId "com.sean.jokester.paid"
-//        }
-//        free {
-//            applicationId "com.sean.jokester.free"
-//        }
-//    }
+    productFlavors {
+        paid {
+            applicationId "com.sean.jokester.paid"
+            buildConfigField "boolean", "PAID_VERSION", "true"
+        }
+        free {
+            applicationId "com.sean.jokester.free"
+            buildConfigField "boolean", "PAID_VERSION", "false"
+        }
+    }
 }
 
 dependencies {

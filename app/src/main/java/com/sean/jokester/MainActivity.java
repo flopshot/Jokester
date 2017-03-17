@@ -4,7 +4,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences prefs = PreferenceManager
               .getDefaultSharedPreferences(getApplicationContext());
         boolean hideSpinner = prefs.getBoolean(FINALIZED_KEY, true);
-        Log.w("hideSpinner Value", String.valueOf(hideSpinner));
         if (hideSpinner) {
             spinner.setVisibility(View.GONE);
         }
@@ -69,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         spinner.setVisibility(View.VISIBLE);
         // 'Joke' library retrieves random Joke from default jokes and jokes retrieved from service
 
-        mEndpointTask = new EndpointAsyncTask();
+        mEndpointTask = new EndpointAsyncTask(BuildConfig.PAID_VERSION);
         mEndpointTask.execute(getApplicationContext());
     }
 

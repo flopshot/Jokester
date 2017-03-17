@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 
+import static com.sean.jokeactivity.Utility.DISPLAY_JOKE_ACTIVITY_BOOL_KEY;
 import static com.sean.jokeactivity.Utility.DISPLAY_JOKE_ACTIVITY_STRING_KEY;
 import static com.sean.jokeactivity.Utility.FINALIZED_KEY;
 
@@ -28,9 +29,14 @@ import static com.sean.jokeactivity.Utility.FINALIZED_KEY;
 public class EndpointAsyncTask extends AsyncTask<Context, Void, List<String>> {
     private static MyApi myApiService = null;
     private Context mContext;
+    private boolean mIsPaid;
 
     private GetTaskListener mListener = null;
     private Exception mError = null;
+
+    public EndpointAsyncTask(boolean isPaid) {
+        this.mIsPaid = isPaid;
+    }
 
     EndpointAsyncTask setListener(GetTaskListener listener) {
         this.mListener = listener;
@@ -96,6 +102,7 @@ public class EndpointAsyncTask extends AsyncTask<Context, Void, List<String>> {
 
             Intent intentDisplayJoke = new Intent(mContext, DisplayJokeActivity.class);
             intentDisplayJoke.putExtra(DISPLAY_JOKE_ACTIVITY_STRING_KEY, joke);
+            intentDisplayJoke.putExtra(DISPLAY_JOKE_ACTIVITY_BOOL_KEY, mIsPaid);
             intentDisplayJoke.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             mContext.startActivity(intentDisplayJoke);
         }
