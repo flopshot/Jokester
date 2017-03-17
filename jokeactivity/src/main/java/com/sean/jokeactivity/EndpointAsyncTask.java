@@ -2,7 +2,9 @@ package com.sean.jokeactivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.widget.Toast;
 
 import com.google.api.client.extensions.android.http.AndroidHttp;
@@ -10,12 +12,14 @@ import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
 import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
 import com.sean.jokebackends.myApi.MyApi;
+import com.sean.jokebackends.myApi.model.MyBean;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 
 import static com.sean.jokeactivity.Utility.DISPLAY_JOKE_ACTIVITY_STRING_KEY;
+import static com.sean.jokeactivity.Utility.FINALIZED_KEY;
 
 /**
  * Task to get joke data then launch DisplayJokeActivity
@@ -56,7 +60,12 @@ public class EndpointAsyncTask extends AsyncTask<Context, Void, List<String>> {
         mContext = params[0];
 
         try {
-            return myApiService.getJokes().execute().getJokeData();
+            MyBean bean =  myApiService.getJokes().execute();
+            if (isCancelled()) {
+                return null;
+            }
+            List<String> response = bean.getJokeData();
+            return response;
         } catch (IOException e) {
             mError = e;
             e.printStackTrace();
@@ -66,6 +75,12 @@ public class EndpointAsyncTask extends AsyncTask<Context, Void, List<String>> {
 
     @Override
     protected void onPostExecute(List<String> results) {
+        SharedPreferences prefs = PreferenceManager
+              .getDefaultSharedPreferences(mContext);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putBoolean(FINALIZED_KEY, true);
+        editor.apply();
+
         String joke;
         if (results != null) {
             joke = selectJoke(results);

@@ -11,7 +11,7 @@ buildscript {
 }
 
 repositories {
-    jcenter();
+     jcenter();
 }
 
 apply plugin: 'java'
@@ -37,5 +37,14 @@ appengine {
     endpoints {
         getClientLibsOnBuild = true
         getDiscoveryDocsOnBuild = true
+    }
+}
+
+
+task startEnpointServer(dependsOn: "appengineRun"){
+    group "google app engine"
+
+    appengine {
+        daemon true
     }
 }
