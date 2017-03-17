@@ -1,9 +1,15 @@
 ext {
     //Version
-    goolePlayServicesLibrary = '10.2.0'
-
-    //Support Libraries dependencies
-    goolePlayServicesDependencies = [
-        ads : "com.google.android.gms:play-services-ads:10.2.0",
+    googlePlayServicesLibrary = '10.2.0'
+    //Google Play Service dependencies
+    googlePlayServicesDependencies = [
+        ads : 'com.google.android.gms:play-services-ads:10.2.0',
     ]
+}
+
+ext {
+    //Version
+    supportLibrary = '25.2.0'
+    //Support Library Dependencies
+    supportDependencies = [ appcompat: "com.android.support:appcompat-v7:25.2.0",]
 }

@@ -8,17 +8,17 @@ import com.sean.jokelib.Joke;
  */
 public class MyBean {
 
-    private String myData;
+//    private String myData;
 
     private static final String[] JOKE_DATA = Joke.getJokeData();
-
-    public String getData() {
-        return myData;
-    }
-
-    public void setData(String data) {
-        myData = data;
-    }
+//
+//    public String getData() {
+//        return myData;
+//    }
+//
+//    public void setData(String data) {
+//        myData = data;
+//    }
 
     public String[] getJokeData() {return JOKE_DATA;}
 }

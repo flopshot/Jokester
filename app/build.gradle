@@ -4,6 +4,10 @@ android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
 
+    configurations.all {
+        resolutionStrategy.force 'com.google.code.findbugs:jsr305:latest.release'
+    }
+
     defaultConfig {
         applicationId "com.sean.jokester"
         minSdkVersion 16
@@ -18,15 +22,20 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+//    productFlavors {
+//        paid {
+//            applicationId "com.sean.jokester.paid"
+//        }
+//        free {
+//            applicationId "com.sean.jokester.free"
+//        }
+//    }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    compile 'com.android.support:appcompat-v7:25.2.0'
-    compile goolePlayServicesDependencies.ads
-    compile project(":jokejavalib")
+    compile supportDependencies.appcompat
+    compile googlePlayServicesDependencies.ads
     compile project(":jokeactivity")
 }

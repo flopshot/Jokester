@@ -22,7 +22,6 @@ import static org.junit.Assert.assertNull;
 
 public class TestEndpointAsyncTask {
 
-
     private final Context mContext =  getInstrumentation().getTargetContext().getApplicationContext();
 
     private String mJsonString = null;

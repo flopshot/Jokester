@@ -1,24 +1,42 @@
 package com.sean.jokester;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.sean.jokeactivity.EndpointAsyncTask;
 
+import static com.sean.jokeactivity.Utility.FINALIZED_KEY;
 
 public class MainActivity extends AppCompatActivity {
-
-    private static final String INTENT_STRING_KEY = "intentKey";
+    ProgressBar spinner;
+    EndpointAsyncTask mEndpointTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        spinner = (ProgressBar) findViewById(R.id.progressBar);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //If app was finalized in last onDestroy, hard set Visibility of spinner to GONE
+        SharedPreferences prefs = PreferenceManager
+              .getDefaultSharedPreferences(getApplicationContext());
+        boolean hideSpinner = prefs.getBoolean(FINALIZED_KEY, true);
+        Log.w("hideSpinner Value", String.valueOf(hideSpinner));
+        if (hideSpinner) {
+            spinner.setVisibility(View.GONE);
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -38,13 +56,36 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
     public void tellJoke(View view) {
+        SharedPreferences prefs = PreferenceManager
+              .getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putBoolean(FINALIZED_KEY, false);
+        editor.apply();
+
+        spinner.setVisibility(View.VISIBLE);
         // 'Joke' library retrieves random Joke from default jokes and jokes retrieved from service
-        new EndpointAsyncTask().execute(getApplicationContext());
-        // Toast.makeText(this, joke, Toast.LENGTH_LONG).show();
+
+        mEndpointTask = new EndpointAsyncTask();
+        mEndpointTask.execute(getApplicationContext());
+    }
+
+    @Override
+    protected void onPause() {
+        if (isFinishing()) {
+            if (mEndpointTask != null) {
+                mEndpointTask.cancel(true);
+
+                SharedPreferences prefs = PreferenceManager
+                      .getDefaultSharedPreferences(getApplicationContext());
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putBoolean(FINALIZED_KEY, true);
+                editor.apply();
+            }
+        }
+        super.onPause();
     }
 }
